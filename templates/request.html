@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>E-Waste Request</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #e8f5e9, #f4f4f4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            background: white;
+            padding: 35px;
+            border-radius: 12px;
+            box-shadow: 0 0 12px lightgray;
+            width: 450px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1b5e20;
+            margin-bottom: 25px;
+        }
+
+        label {
+            font-size: 18px;
+        }
+
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin-top: 6px;
+            margin-bottom: 18px;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            height: 90px;
+        }
+
+        input[type="submit"] {
+            background-color: green;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: darkgreen;
+        }
+
+        .home-link {
+            display: block;
+            text-align: center;
+            margin-top: 15px;
+            text-decoration: none;
+            color: green;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>E-Waste Pickup Request</h1>
+        {% if session.get("user") %}
+             <p>Welcome, {{ session.get("user").split('@')[0] }}</p>
+        {% endif %}
+
+        <form method="POST" action="/request">
+            <label>Full Name:</label>
+            <input type="text" name="fullname" required>
+
+            <label>Device Type:</label>
+            <select name="device_type" required>
+                <option value="Mobile">Mobile</option>
+                <option value="Laptop">Laptop</option>
+                <option value="Battery">Battery</option>
+                <option value="Charger">Charger</option>
+                <option value="Monitor">Monitor</option>
+            </select>
+
+            <label>Quantity:</label>
+            <input type="number" name="quantity" required>
+
+            <label>Address:</label>
+            <textarea name="address" required></textarea>
+
+            <label>Pickup Date:</label>
+            <input type="date" name="pickup_date" required>
+
+            <input type="submit" value="Submit Request">
+        </form>
+
+        <a href="/" class="home-link">Back to Home</a>
+        <a href="/logout">Logout</a>
+    </div>
+</body>
+</html>

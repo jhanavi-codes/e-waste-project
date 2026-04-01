@@ -1,0 +1,26 @@
+<h2>Assign Employee</h2>
+
+<form method="POST">
+
+    <label>Select Request:</label>
+     <select name="request">
+    {% for r in requests %}
+        <option value="{{ r[0] }}">Request {{ r[0] }}</option>
+    {% endfor %}
+    </select>
+    <br><br>
+
+    <label>Select Employee:</label>
+    <select name="employee">
+    {% for e in employees %}
+        <option value="{{ e[0] }}">{{ e[0] }}</option>
+    {% endfor %}
+    </select>
+
+    <br><br>
+
+    <button type="submit">Assign</button>
+</form>
+
+<br>
+<a href="/admin">Back to Dashboard</a>

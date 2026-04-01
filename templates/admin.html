@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #e8f5e9, #f4f4f4);
+            margin: 0;
+            padding: 40px;
+        }
+
+        .container{
+               display: flex;
+               gap: 20px;
+               width: 95%;
+               margin: 30px auto;
+               align-items: flex-start;
+        }
+
+        h1 {
+            text-align: center;
+            color: #1b5e20;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+
+        th {
+            background: green;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        .home-link {
+            display: block;
+            text-align: center;
+            margin-top: 20px;
+            color: green;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .home-link:hover {
+            text-decoration: underline;
+        }
+        .container{
+    display: flex;
+    gap: 20px;
+}
+
+.sidebar{
+    width: 220px;
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 12px;
+    min-height: 250px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.sidebar a{
+    display: block;
+    padding: 12px 14px;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #2e7d32;
+    font-weight: bold;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+.sidebar a:hover{
+    background: #e8f5e9;
+    border-radius: 8px;
+    padding-left: 12px
+}
+#menuItems{
+    display: block;
+}
+    </style>
+</head>
+<script>
+function toggleMenu() {
+    var menu = document.getElementById("menuItems");
+
+    if (menu.style.display === "none") {
+        menu.style.display = "block";
+    } else {
+        menu.style.display = "none";
+    }
+}
+</script>
+<body>
+    <div class="container">
+        <div class="sidebar">
+    <h3 onclick="toggleMenu()" style="margin-top:0; color:#1b5e20; cursor:pointer;">
+    ☰ Admin Menu ▼
+    </h3>
+    <p style="margin-top:-5px; margin-bottom:15px; color:gray; font-size:14px;">
+    Manage users, employees and requests
+</p>
+    <div id="menuItems">
+        <a href="/admin">Dashboard</a>
+        <a href="/add_employee">Add Employee</a>
+        <a href="/view_employees">View Employees</a>
+        <a href="/remove_user">Remove User</a>
+        <a href="/remove_employee">Remove Employee</a>
+    </div>
+</div>
+        
+        <div style="flex:1;">
+    <h1 style="margin-bottom: 20px;">Admin Dashboard</h1>
+
+    
+
+        <table>
+            <tr>
+                <th>Id</th>
+
+                <th>User Name</th>
+                <th>Device Type</th>
+                <th>Quantity</th>
+                <th>Pickup Date</th>
+                <th>Status</th>
+                <th>Assign</th>
+                <th>Update</th>
+                <th>Employee</th>
+            </tr>
+
+            {% for r in requests %}
+            <tr>
+                <td>{{ r[0] }}</td>
+                <td>{{ r[1] }}</td>
+                <td>{{ r[2] }}</td>
+                <td>{{ r[3] }}</td>
+                <td>{{ r[4] }}</td>
+                <td>{{ r[5] }}</td>
+                <td>{{ r[6] if r[6] else "Not Assigned" }}</td>
+                <td>
+                     {% if r[6] %}
+                         Assigned
+                     {% else %}
+                         <a href="/assign/{{ r[0] }}">Assign</a>
+                     {% endif %}
+                   </td>
+                <td>
+                    <form method="POST" action="/update_status/{{ r[0] }}">
+                         <select name="status">
+                            <option>Pending</option>
+                            <option>Assigned</option>
+                            <option>Completed</option>
+                         </select>
+                         <button type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+
+
+      <div style="text-align:center; margin-top:20px;">
+        <a href="/" class="home-link">Back to Home</a>
+    </div>
+</div>
+<a href="/logout">Logout</a>
+</body>
+</html>
